@@ -1,23 +1,37 @@
 import logo from './logo.svg';
 import './App.css';
+import Additem from './Components/Additem';
+import Itemlist from './Components/Itemlist';
+import { useState } from 'react';
 
 function App() {
+   
+  const onDelete=(item)=>{
+    console.log('delete');
+
+    setItems(items.filter((e)=>{
+     return e!=item;
+    }))
+  }
+
+    const[items,setItems]=useState([
+      
+  ])
+  const addOn=(order,dish,price)=>{
+    // let sno=items[items.length-1].sno+1;
+    const myItem={
+      //sno:sno,
+      order:order,
+      dish:dish,
+      price:price,
+    }
+    setItems([...items,myItem]);
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Additem  addOn={addOn}/>
+      <Itemlist item={items} onDelete={onDelete} />
     </div>
   );
 }
