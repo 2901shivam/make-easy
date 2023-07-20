@@ -1,37 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
 import Additem from './Components/Additem';
-import Itemlist from './Components/Itemlist';
+import Item from './Components/Item';
 import { useState } from 'react';
 
 function App() {
+  const [orders, setOrders]= useState([]);
    
-  const onDelete=(item)=>{
-    console.log('delete');
 
-    setItems(items.filter((e)=>{
-     return e!=item;
-    }))
+  const addOrder=(order)=>{
+    setOrders([...orders, order])
+    localStorage.setItem(order.id, JSON.stringify(order));
   }
 
-    const[items,setItems]=useState([
-      
-  ])
-  const addOn=(order,dish,price)=>{
-    // let sno=items[items.length-1].sno+1;
-    const myItem={
-      //sno:sno,
-      order:order,
-      dish:dish,
-      price:price,
-    }
-    setItems([...items,myItem]);
+  const deleteOrder=(orderId)=>{
+    const newOrder= orders.filter(ele=> ele.id!==orderId);
+    setOrders(newOrder);
   }
   
   return (
     <div>
-      <Additem  addOn={addOn}/>
-      <Itemlist item={items} onDelete={onDelete} />
+      <Additem  onAddOrder={addOrder}/>
+      <Item item={orders} onDeleteOrder={deleteOrder} />
     </div>
   );
 }
